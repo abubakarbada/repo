@@ -1,12 +1,178 @@
-*.class
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package MyApp;
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import javax.swing.*;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
-# Package Files #
-*.jar
-*.war
-*.ear
+/**
+ *
+ * @author ABUBAKAR BADA
+ */
+public class Home extends JFrame implements ActionListener{
+    
+    private JTable table;
+    ImageIcon add=new ImageIcon("C:\\Users\\ABUBAKAR BADA\\Documents\\NetBeansProjects\\HospitalApp\\src\\MyApp\\Alarm-Plus-icon.png");
+    ImageIcon delete=new ImageIcon("C:\\Users\\ABUBAKAR BADA\\Documents\\NetBeansProjects\\HospitalApp\\src\\MyApp\\Remove.png");
+    ImageIcon edit=new ImageIcon("C:\\Users\\ABUBAKAR BADA\\Documents\\NetBeansProjects\\HospitalApp\\src\\MyApp\\edit.png");
+    ImageIcon cons=new ImageIcon("C:\\Users\\ABUBAKAR BADA\\Documents\\NetBeansProjects\\HospitalApp\\src\\MyApp\\consult.png");
+    ImageIcon labIcon=new ImageIcon("C:\\Users\\ABUBAKAR BADA\\Documents\\NetBeansProjects\\HospitalApp\\src\\MyApp\\Lab....png");
+    ImageIcon logout=new ImageIcon("C:\\Users\\ABUBAKAR BADA\\Documents\\NetBeansProjects\\HospitalApp\\src\\MyApp\\logout.png");
+    ImageIcon logo=new ImageIcon("C:\\Users\\ABUBAKAR BADA\\Documents\\NetBeansProjects\\HospitalApp\\src\\MyApp\\iconimage.png");
+    
+    JButton lab=new JButton("Lab",labIcon);
+    JButton addB=new JButton("Add", add);
+    JButton deleteB=new JButton("Delete", delete);
+    JButton editB=new JButton("Edit", edit);
+    JButton consultB=new JButton("Consult", cons);
+    JButton logoutB=new JButton(logout);
+    int day,month,year;
+    JLabel logged=new JLabel("-");
+    int dayname;
+    
+    
+   // public static void main (String[]args){
+     //   Home hm=new Home();
+    //}
+    Home(){
+        super("HOME");
+        Container con=getContentPane();
+        setSize(1350,400);
+        setLayout(null);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+        setResizable(false);
+        
+        
+        setIconImage(logo.getImage());
+        ImageIcon cover=new ImageIcon("C:\\Users\\ABUBAKAR BADA\\Documents\\NetBeansProjects\\HospitalApp\\src\\MyApp\\cover.png");
+        JLabel coverL=new JLabel(cover);
+        coverL.setBounds(0,0,1350,400);
+        //con.add(coverL);
+        
+        DatabaseConnection db = new DatabaseConnection();
+		try {
+			table = new JTable(db.createTableModel());
+			table.setRowSelectionAllowed(true);
+			table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                        table.setBackground(Color.LIGHT_GRAY);
+                        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		JScrollPane scrollPane = new JScrollPane(table);
+                scrollPane.setBounds(270,50,1055,300);
+		con.add(scrollPane);
+		
+		JPanel panel = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
+		flowLayout.setVgap(10);
+		flowLayout.setHgap(20);
+                panel.setBounds(250,50,300,100);
+		con.add(panel);
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+        
+        JLabel dateLabel=new JLabel("Today is:");
+        dateLabel.setBounds(1100,10,100,20);
+        con.add(dateLabel);
+        
+        JSeparator horizontal=new JSeparator(SwingConstants.HORIZONTAL);
+        horizontal.setBounds(20,30,1300,200);
+        con.add(horizontal);
+        
+        GregorianCalendar calendar=new GregorianCalendar();
+        day=calendar.get(Calendar.DAY_OF_MONTH);
+        month=calendar.get(Calendar.MONTH);
+        year=calendar.get(Calendar.YEAR);
+        
+        
+        JLabel date=new JLabel(+ day+"/"+(month+1)+"/"+year);
+        date.setBounds(1150,10,100,20);
+        con.add(date);
+        
+        JLabel log=new JLabel("You are logged in as: ");
+        log.setBounds(20,10,150,20);
+        con.add(log);
+        
+        //logged.setText(new Login().name);
+        logged.setBounds(120,10,100,20);
+        con.add(logged);
+        
+        
+        
+        
+        logoutB.setBounds(20,50,60,40);
+        con.add(logoutB);
+        logoutB.addActionListener(this);
+        addB.setBounds(20,250,100,30);
+        con.add(addB);
+        
+        
+        deleteB.setBounds(130,250,100,30);
+        con.add(deleteB);
+                
+        editB.setBounds(20,280,100,30);
+        con.add(editB);
+        
+        consultB.setBounds(130,280,100,30);
+        con.add(consultB);
+        consultB.addActionListener(this);
+        
+        lab.setBounds(20,310,100,30);
+        con.add(lab);
+        lab.addActionListener(this);
+        
+        ImageIcon name=new ImageIcon("C:\\Users\\ABUBAKAR BADA\\Documents\\NetBeansProjects\\HospitalApp\\src\\MyApp\\karaye2.png");
+        JLabel label=new JLabel(name);
+        label.setBounds(20,50,250,200);
+        con.add(label);
+        
+        addB.addActionListener(this);
+        deleteB.addActionListener(this);
+        editB.addActionListener(this);
+        consultB.addActionListener(this);
+        
+    }
+    
+    public void actionPerformed(ActionEvent e){
+        
+        
+        if(e.getSource()==lab){
+            LabRequest lb=new LabRequest();
+        }
+        
+        if(e.getSource()==addB){
+            //Search4 cc=new Search4();
+            Add ad=new Add();
+            //dispose();
+        }
+        if(e.getSource()==editB){
+            Search sc=new Search();
+            //dispose();
+        }
+        if(e.getSource()==consultB){
+            Consult ct=new Consult();
+            //dispose();
+        }
+        if(e.getSource()==logoutB){
+           System.exit(0);
+            //new Login().setVisible(true);
+            //System.exit(0);
+            
+        }
+        
+        
+    }
+
+  
+}
