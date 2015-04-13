@@ -18,7 +18,7 @@ import javax.swing.event.AncestorListener;
  *
  * @author ABUBAKAR BADA
  */
-public class Home extends JFrame implements ActionListener{
+public class Home {
     
     private JTable table;
     ImageIcon add=new ImageIcon("C:\\Users\\ABUBAKAR BADA\\Documents\\NetBeansProjects\\HospitalApp\\src\\MyApp\\Alarm-Plus-icon.png");
